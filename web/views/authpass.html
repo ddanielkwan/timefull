@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html class ="in">
+    <head>
+        <title>Welcome</title>
+        <meta charset="utf-8">
+        <script src="https://www.gstatic.com/firebasejs/7.2.1/firebase-app.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/7.2.1/firebase-database.js"></script>
+		<script src="https://www.gstatic.com/firebasejs/7.2.1/firebase-auth.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+        <script src = "../scripts/reminder.js"></script>
+        <link rel="stylesheet" type="text/css" href="../stylesheets/styles.css"/>
+        <link rel="icon" href="../images/timefull.png">
+
+    </head>
+    <body>
+            <div>
+                <button class ="btnLogout"  onclick = "logout_btn()">Logout</button>
+             
+                <p class="today" id="date_time"></p><br><br>
+
+            </div>
+            <div class = "create" >
+                
+                <h2>TimeFull Note</h2>
+            
+                <input type="text" id="topic" placeholder="Topic"><br>
+                <br>
+                <textarea name="message" rows="10" cols="30" id="note" placeholder="Insert note here..."></textarea><br>
+                <br>
+                <!-- <p class = "today" >Today: </p>
+                <p class="today" id="date_time"></p><br><br> -->
+                <input type="text" id="reminder" placeholder="Optional: MM-DD-YYYY"><br><br>
+                <button id = "submitnote" onclick="post()">Submit</button>
+                <p>Note: can also update data by putting the same title name</p>
+            </div> 
+            
+            <div class ="remove" >
+
+                <table class = "hello" id="webDataTable">
+                    <tr class = "frow">
+                        <th>Date</th>
+                        <th>Topic</th>
+                        <th>Note</th>
+                        <th>Reminder</th>
+                    </tr>
+                </table>
+               
+                <br>
+                <div class = "again">
+                    <input type="text" id="delete_title" placeholder="Remove Specific Note.."><br><br>
+                    <button class = "clearbutton" onclick="clean_clear()">Clear All</button>
+                    <button class = "delbtn" onclick="del_one_only()">Delete</button>
+                </div>
+            </div>
+
+
+
+            <!--Build table -->
+
+        <!-- <div class ="showtable">
+        <h2> Saved Notes</h2>
+        <p>Note: All tasks due today will have a red highlight on them</p> -->
+        <!-- <table class = "hello" id="webDataTable">
+            <tr class = "frow">
+                <th>Date</th>
+                <th>Topic</th>
+                <th>Note</th>
+                <th>Reminder</th>
+            </tr>
+        </table> 
+        </div> -->
+            <script>
+            
+                firebase.auth().onAuthStateChanged(firebaseUser =>{
+                if(firebaseUser){
+                    var database = firebase.database();
+                var user = String(firebase.auth().currentUser.uid);
+                database.ref().child('user-posts').child(user).once('value', function(snapshot){
+                    
+                    if(snapshot.exists()){
+                        var content = '';
+                        snapshot.forEach(function(data){
+                            var val = data.val();
+                            content +='<tr>';
+                            content += '<td>' + val.time + '</td>';
+                            content += '<td>' + val.title + '</td>';
+                            content += '<td>' + val.note + '</td>';
+                            if(val.reminder == today()){
+                                content += '<td style="background-color:red">' + val.reminder + '</td>';
+                            }else{
+                                content += '<td>' + val.reminder + '</td>';
+                            }
+                            content += '</tr>';
+                            
+                        });
+                        
+                        $('#webDataTable').append(content);
+                    }
+                });
+                
+            }
+            });
+            </script>
+   
+
+    </body>
+</html>

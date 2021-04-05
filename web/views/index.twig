@@ -1,0 +1,66 @@
+
+
+{% block content %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <script src="https://www.gstatic.com/firebasejs/7.2.1/firebase-app.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/7.2.1/firebase-database.js"></script>
+		<script src="https://www.gstatic.com/firebasejs/7.2.1/firebase-auth.js"></script>
+        <link rel="stylesheet" type="text/css" href="../stylesheets/styles.css"/>
+       <link rel="icon" href="../images/timefull.png">
+
+
+        <title>TimeFull</title>
+    </head>
+    
+    <body>
+       
+ 
+        <div class = "login">
+            <center><h2 id="main"><img src ="../images/timefull.png" width = "75" height = "75">TimeFull</h2></center>
+        
+            <center>
+            
+            <table>
+            <tr>
+           
+                <td><input type ="text" id="username" placeholder= "Email" /> </td>
+            </tr>
+            <tr>
+    
+            <td><input type="password" name="password" id="password" value="" placeholder="Password">
+            </tr>
+            </table>
+
+            <br>
+            
+            <input id="btnLogin"type="button"  value="Login" >
+            <input id="btnSignUp" type="button"  value="SignUp" >
+        
+            </center>
+            
+            <p class="remember_me">
+                <label>
+                  <input type="checkbox" name="remember_me" id="remember_me">
+                  Remember me on this computer
+                </label>
+            </p>
+
+            <div class="login-help">
+                <p>Forgot your password? <a href="#">Click here to reset it</a>.</p>
+            </div> 
+         
+        </div>
+        
+
+        <script src = "../scripts/auth.js"></script>
+
+    </body>
+    
+
+
+    
+</html>
+{% endblock %}
